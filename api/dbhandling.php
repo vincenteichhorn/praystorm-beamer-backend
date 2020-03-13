@@ -24,7 +24,7 @@ trait DBHandling{
         return $erg;
     }
 
-    protected function countElements($table,$filter=array()){
+    public function countElements($table,$filter=array()){
         require DB_CONFIG_FILE;
         $pdo = new PDO($dns,$user,$psw);
         $sqlfilter="";
@@ -37,7 +37,8 @@ trait DBHandling{
             }
             $sqlfilter = substr($sqlfilter,0,-4);
         }
-        $statement = $pdo->prepare("SELECT COUNT(id) AS number FROM ".$table.$sqlfilter);
+        $sql = "SELECT COUNT(id) AS number FROM ".$table.$sqlfilter;
+        $statement = $pdo->prepare($sql);
         $statement->execute($sqlinput);
         $data = $statement->fetch();
         return $data['number'];
@@ -45,7 +46,7 @@ trait DBHandling{
 
     protected function writeInDB(string $table,array $data){          //(Tabellenname,array(array(0=>"spalte",1=>"Daten")))
         require DB_CONFIG_FILE;
-        $sql = "Insert INTO ".$table." (";
+        $sql = "INSERT INTO ".$table." (";
         $sqlvalue="(";
         $sqlinput=array();
         foreach($data as $element){
@@ -54,8 +55,7 @@ trait DBHandling{
             $sqlinput[]=$element[1];
         }
         $sqlvalue=substr($sqlvalue,0,-2).")";
-        $sql=substr($sql,0,-2)." VALUES ".$sqlvalue;
-
+        $sql=substr($sql,0,-2).") VALUES ".$sqlvalue;
         $pdo = new PDO($dns,$user,$psw);
         $statement = $pdo->prepare($sql);
         $statement->execute($sqlinput);
@@ -67,7 +67,7 @@ trait DBHandling{
         $sql = "DELETE FROM ".$table." WHERE ";
         $sqlinput=array();
         foreach($condition as $element){
-            $sql = $sql.$element[0]." AND ";
+            $sql = $sql.$element[0]."=? AND ";
             $sqlinput[]=$element[1];
         }
         $sql = substr($sql,0,-5);
@@ -84,9 +84,9 @@ trait DBHandling{
             $sql = $sql.$element[0]."=?, ";
             $sqlinput[]=$element[1];
         }
-        $sql = substr($sql,0,-2)." WHERE ".$condition;
+        $sql = substr($sql,0,-2)." WHERE ";
         foreach($condition as $element){
-            $sql = $sql.$element[0]." AND ";
+            $sql = $sql.$element[0]."=? AND ";
             $sqlinput[]=$element[1];
         }
         $sql = substr($sql,0,-5);

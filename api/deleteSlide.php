@@ -1,7 +1,11 @@
 <?php
-$data = json_decode($_POST['data']);
+//$data = json_decode($_POST['data']);
+
+$data = array(
+    "part_id" => 
+);
 
 require 'database.php';
 $database = new Database();
-$database->deleteEvent($data['part_id'],$data['slide']);
+$database->deleteSlide($data['part_id'],$data['slide']);
 ?>

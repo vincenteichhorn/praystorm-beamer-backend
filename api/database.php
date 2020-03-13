@@ -49,7 +49,7 @@ class Database{
     public function addPart($data){
         $input = array(
             array("eventID",$data['eventID']),
-            array("title",$data['description']),
+            array("title",$data['title']),
             array("position",$data['position']),
             array("type",$data['type']),
             array("author",$data['author']),
@@ -76,7 +76,7 @@ class Database{
             array("name",$name),
             array("date",$date)
         );
-        $this->updateDB("events",$data,$condition)
+        $this->updateDB("events",$data,$condition);
     }
 
     public function updatePart($eventID,$title,array $data){
@@ -84,7 +84,7 @@ class Database{
             array("eventID",$eventID),
             array("title",$title)
         );
-        $this->updateDB("parts",$data,$condition)
+        $this->updateDB("parts",$data,$condition);
     }
 
     public function updateSlide($part_id,$title,array $data){
@@ -92,7 +92,7 @@ class Database{
             array("part_id",$part_id),
             array("title",$title)
         );
-        $this->updateDB("slides",$data,$condition)
+        $this->updateDB("slides",$data,$condition);
     }
 
     public function deleteEvent($name,$date){
@@ -103,7 +103,7 @@ class Database{
         $this->deleteFromDB("events",$condition);
     }
 
-    public function deleteEvent($eventID,$title){
+    public function deletePart($eventID,$title){
         $condition = array(
             array("eventID",$eventID),
             array("title",$title)
@@ -111,7 +111,7 @@ class Database{
         $this->deleteFromDB("parts",$condition);
     }
 
-    public function deleteEvent($part_id,$title){
+    public function deleteSlide($part_id,$title){
         $condition = array(
             array("part_id",$part_id),
             array("title",$title)
