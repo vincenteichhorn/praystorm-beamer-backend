@@ -1,4 +1,9 @@
-<?php 
-echo "Hallo WElt!";
+<?php
 
+class database{
+
+    use DBHandling;
+
+    
+}
 ?>
