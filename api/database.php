@@ -94,5 +94,29 @@ class Database{
         );
         $this->updateDB("slides",$data,$condition)
     }
+
+    public function deleteEvent($name,$date){
+        $condition = array(
+            array("name",$name),
+            array("date",$date)
+        );
+        $this->deleteFromDB("events",$condition);
+    }
+
+    public function deleteEvent($eventID,$title){
+        $condition = array(
+            array("eventID",$eventID),
+            array("title",$title)
+        );
+        $this->deleteFromDB("parts",$condition);
+    }
+
+    public function deleteEvent($part_id,$title){
+        $condition = array(
+            array("part_id",$part_id),
+            array("title",$title)
+        );
+        $this->deleteFromDB("slides",$condition);
+    }
 }
 ?>
