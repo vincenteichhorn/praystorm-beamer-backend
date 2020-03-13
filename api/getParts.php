@@ -4,10 +4,10 @@
 
   require 'database.php';
   $database = new Database();
-  $data = $database->getParts($_POST['name'],$_POST['date']);
+  $data = $database->getParts($_POST['name'], $_POST['date']);
   $list = array();
-  foreach($data as $row){
-    $list[]=array(
+  foreach($data as $row){ 
+    $list[] = array(
       "title"=>$row['title'],
       "position"=>$row['position'],
       "type"=>$row['type'],
