@@ -27,7 +27,7 @@ class Database{
     public function getSlides($partname){
         require DB_CONFIG_FILE;
         $pdo = new PDO($dns,$user,$psw);
-        $sqlstatement = "SELECT * FROM slides LEFT JOIN parts ON slides.part_id = parts.id WHERE parts.name = ? AND events.date = ? ORDER BY slides.position";
+        $sqlstatement = "SELECT * FROM slides LEFT JOIN parts ON slides.part_id = parts.id WHERE parts.title = ? ORDER BY slides.position";
         $statement = $pdo->prepare($sqlstatement);
         $statement->execute(array($partname));
         $erg=array();
@@ -35,6 +35,40 @@ class Database{
             $erg[]=$row;
         }
         return $erg;
+    }
+
+    public function addEvent($data){
+        $input = array(
+            array("name",$data['name']),
+            array("description",$data['description']),
+            array("date",$data['date'])
+        );
+        $this->writeInDB("events",$input);
+    }
+
+    public function addPart($data){
+        $input = array(
+            array("eventID",$data['eventID']),
+            array("title",$data['description']),
+            array("position",$data['position']),
+            array("type",$data['type']),
+            array("author",$data['author']),
+            array("album",$data['album']),
+            array("copyright",$data['copyright']),
+        );
+        $this->writeInDB("parts",$input);
+    }
+
+    public function addSlide($data){
+        $input = array(
+            array("part_id",$data['part_id']),
+            array("title",$data['title']),
+            array("shorthand",$data['shorthand']),
+            array("position",$data['position']),
+            array("type",$data['type']),
+            array("data",$data['data'])
+        );
+        $this->writeInDB("slides",$input);
     }
 }
 ?>
