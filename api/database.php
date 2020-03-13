@@ -14,7 +14,7 @@ class Database{
     public function getParts($name,$date){
         require DB_CONFIG_FILE;
         $pdo = new PDO($dns,$user,$psw);
-        $sqlstatement = "SELECT parts.* FROM parts LEFT JOIN events ON parts.eventID = events.id WHERE events.name = 'praystorm' AND events.date = '2020-04-04' ";
+        $sqlstatement = "SELECT parts.* FROM parts LEFT JOIN events ON parts.eventID = events.id WHERE events.name = ? AND events.date = ? ";
         $statement = $pdo->prepare($sqlstatement);
         $statement->execute(array($name,$date));
         $erg=array();
