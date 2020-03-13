@@ -1,7 +1,5 @@
 <?php
 
-define("DB_CONFIG_FILE","config/config.php");
-
 trait DBHandling{
     protected function selectFromDB(string $table,string $columns,array $condition=array(),string $filter=""){
         require DB_CONFIG_FILE;
