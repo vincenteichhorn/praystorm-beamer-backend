@@ -4,16 +4,14 @@
 
   require 'database.php';
   $database = new Database();
-  $data = $database->getParts($_POST['name'],$_POST['date']);
+  $data = $database->getSlides($_POST['partname']);
   $list = array();
   foreach($data as $row){
     $list[]=array(
       "title"=>$row['title'],
-      "position"=>$row['position'],
+      "shorthand"=>$row['shorthand'],
       "type"=>$row['type'],
-      "author"=>$row['author'],
-      "album"=>$row['album'],
-      "copyright"=>$row['copyright']
+      "data"=>$row['data']
     );    
   }
   echo json_encode($list);
