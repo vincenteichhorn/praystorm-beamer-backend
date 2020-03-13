@@ -1,6 +1,6 @@
 <?php
 
-const "config/config.php";
+define("DB_CONFIG_FILE","config/config.php");
 
 trait DBHandling{
     protected function selectFromDB(string $table,string $columns,array $condition=array(),string $filter=""){
@@ -14,8 +14,8 @@ trait DBHandling{
                 $sqlstatement = $sqlstatement." ".$element[0]."=? AND";
                 $input[] = $element[1];
             }
+            $sqlstatement = substr($sqlstatement,0,-4);
         }
-        $sqlstatement = substr($sqlstatement,0,-4);
         $sqlstatement = $sqlstatement." ".$filter;
         $statement = $pdo->prepare($sqlstatement);
         $statement->execute($input);

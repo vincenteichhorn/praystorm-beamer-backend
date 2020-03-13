@@ -1,7 +1,7 @@
 <?php
   require 'database.php';
   $database = new Database();
-  $data = $database->getEvents();
+  $data = $database->getParts();
   
   $list = array();
   foreach($data as $row){
