@@ -70,5 +70,29 @@ class Database{
         );
         $this->writeInDB("slides",$input);
     }
+
+    public function updateEvent($name,$date,array $data){
+        $condition = array(
+            array("name",$name),
+            array("date",$date)
+        );
+        $this->updateDB("events",$data,$condition)
+    }
+
+    public function updatePart($eventID,$title,array $data){
+        $condition = array(
+            array("eventID",$eventID),
+            array("title",$title)
+        );
+        $this->updateDB("parts",$data,$condition)
+    }
+
+    public function updateSlide($part_id,$title,array $data){
+        $condition = array(
+            array("part_id",$part_id),
+            array("title",$title)
+        );
+        $this->updateDB("slides",$data,$condition)
+    }
 }
 ?>

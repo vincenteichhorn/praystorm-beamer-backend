@@ -35,8 +35,8 @@ trait DBHandling{
                 $sqlfilter = $sqlfilter." ".$element[0]."=? AND";
                 $sqlinput[]=$element[1];
             }
+            $sqlfilter = substr($sqlfilter,0,-4);
         }
-        $sqlfilter = substr($sqlfilter,0,-4);
         $statement = $pdo->prepare("SELECT COUNT(id) AS number FROM ".$table.$sqlfilter);
         $statement->execute($sqlinput);
         $data = $statement->fetch();
