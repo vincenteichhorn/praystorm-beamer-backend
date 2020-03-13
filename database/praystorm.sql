@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
--- https://www.phpmyadmin.net/
+-- version 4.5.1
+-- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 06. Mrz 2020 um 14:49
--- Server-Version: 10.4.11-MariaDB
--- PHP-Version: 7.4.1
+-- Erstellungszeit: 13. Mrz 2020 um 17:07
+-- Server-Version: 10.1.19-MariaDB
+-- PHP-Version: 7.0.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -45,29 +43,12 @@ INSERT INTO `events` (`id`, `name`, `description`, `date`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `foreign_events_parts`
---
-
-CREATE TABLE `foreign_events_parts` (
-  `event_id` int(11) NOT NULL,
-  `part_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Daten für Tabelle `foreign_events_parts`
---
-
-INSERT INTO `foreign_events_parts` (`event_id`, `part_id`) VALUES
-(1, 1);
-
--- --------------------------------------------------------
-
---
 -- Tabellenstruktur für Tabelle `parts`
 --
 
 CREATE TABLE `parts` (
   `id` int(11) NOT NULL,
+  `eventID` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `position` int(11) NOT NULL,
   `type` enum('SONG','INSERT') NOT NULL,
@@ -80,8 +61,8 @@ CREATE TABLE `parts` (
 -- Daten für Tabelle `parts`
 --
 
-INSERT INTO `parts` (`id`, `title`, `position`, `type`, `author`, `album`, `copyright`) VALUES
-(1, 'One Way', 0, 'SONG', 'Hillsong Worship', 'Ultimate Worship Vol 1', '© Hillsong Music 2006\r\nWords & Music by Joel Houston and Jonathon Douglass');
+INSERT INTO `parts` (`id`, `eventID`, `title`, `position`, `type`, `author`, `album`, `copyright`) VALUES
+(1, 1, 'One Way', 0, 'SONG', 'Hillsong Worship', 'Ultimate Worship Vol 1', 'Hillsong Music 2006\nWords & Music by Joel Houston and Jonathon Douglass');
 
 -- --------------------------------------------------------
 
@@ -104,10 +85,10 @@ CREATE TABLE `slides` (
 --
 
 INSERT INTO `slides` (`id`, `part_id`, `title`, `shorthand`, `position`, `type`, `data`) VALUES
-(1, 1, 'Vers 1', 'V1', 0, 'SONGPART', '{\"lyrics\": [\"I lay my life down at Your feet\",\"You\'re the only One I need\",\"I turn to You and You are always there\",\"In troubled times it\'s all I need\",\"I humble all I am all to You\"],}'),
-(2, 1, 'Chorus', 'C', 1, 'SONGPART', '{\"lyrics\": [\"One way\",\"Jesus\",\"You\'re the only One that I could live for\",\"\",\"One way\",\"Jesus\",\"You\'re the only One that I could live for\"],}'),
-(3, 1, 'Vers 2', 'V2', 2, 'SONGPART', '{\"lyrics\": [\"You are always\",\"Always there\",\"Every how and every where\",\"Your grace abounds so deeply within me\",\"You will never ever change\",\"Yesterday today the same\",\"Forever \'til forever meets no end\"],}'),
-(4, 1, 'Bridge', 'B', 3, 'SONGPART', '{\"lyrics\": [\"You are the Way\",\"The Truth and the Life\",\"We live by faith and not by sight\",\"For You\",\"We\'re living all for You\",\"You are the Way\",\"The Truth and the Life\",\"We live by faith and not by sight\",\"For You\",\"We\'re living all for You\"],}\r\n\r\n');
+(1, 1, 'Vers 1', 'V1', 0, 'SONGPART', '{"lyrics": ["I lay my life down at Your feet","You''re the only One I need","I turn to You and You are always there","In troubled times it''s all I need","I humble all I am all to You"],}'),
+(2, 1, 'Chorus', 'C', 1, 'SONGPART', '{"lyrics": ["One way","Jesus","You''re the only One that I could live for","","One way","Jesus","You''re the only One that I could live for"],}'),
+(3, 1, 'Vers 2', 'V2', 2, 'SONGPART', '{"lyrics": ["You are always","Always there","Every how and every where","Your grace abounds so deeply within me","You will never ever change","Yesterday today the same","Forever ''til forever meets no end"],}'),
+(4, 1, 'Bridge', 'B', 3, 'SONGPART', '{"lyrics": ["You are the Way","The Truth and the Life","We live by faith and not by sight","For You","We''re living all for You","You are the Way","The Truth and the Life","We live by faith and not by sight","For You","We''re living all for You"],}\r\n\r\n');
 
 --
 -- Indizes der exportierten Tabellen
@@ -120,17 +101,11 @@ ALTER TABLE `events`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `foreign_events_parts`
---
-ALTER TABLE `foreign_events_parts`
-  ADD PRIMARY KEY (`event_id`,`part_id`),
-  ADD KEY `part_id` (`part_id`);
-
---
 -- Indizes für die Tabelle `parts`
 --
 ALTER TABLE `parts`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `eventID` (`eventID`);
 
 --
 -- Indizes für die Tabelle `slides`
@@ -148,36 +123,25 @@ ALTER TABLE `slides`
 --
 ALTER TABLE `events`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT für Tabelle `parts`
 --
 ALTER TABLE `parts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT für Tabelle `slides`
 --
 ALTER TABLE `slides`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
 -- Constraints der exportierten Tabellen
 --
-
---
--- Constraints der Tabelle `foreign_events_parts`
---
-ALTER TABLE `foreign_events_parts`
-  ADD CONSTRAINT `foreign_events_parts_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `foreign_events_parts_ibfk_2` FOREIGN KEY (`part_id`) REFERENCES `parts` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints der Tabelle `slides`
 --
 ALTER TABLE `slides`
   ADD CONSTRAINT `slides_ibfk_1` FOREIGN KEY (`part_id`) REFERENCES `parts` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
