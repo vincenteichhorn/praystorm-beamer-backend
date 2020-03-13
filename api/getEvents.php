@@ -8,7 +8,11 @@
   
   $list = array();
   foreach($data as $row){
-  $list[]=array("name"=>$row['name'],"date"=>$row['date'],"description"=>$row['description']);    
+    $list[] = array(
+      "name" => $row['name'],
+      "description" => $row['description'],
+      "date" => $row['date']
+    );    
   }
   echo json_encode($list);
 ?>
