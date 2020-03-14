@@ -7,15 +7,33 @@ if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
 } else {
     echo "Möglicherweise eine Dateiupload-Attacke!\n";
 }
-$handle = fopen ( "../data/wunsch.txt", "r" );
-$inhalt = fgets($handle);
-echo "<ul>";
-echo "<li> $inhalt </li>";
-while($inhalt=fgets($handle,4096)){
-    echo "<li> $inhalt </li>";
-}
-echo "</ul>";
-fclose($handle);
-
 print "</pre>";
+$handle = fopen ( "tmpdata/tmpsongfile.txt", "r" );
+$data = fgets($handle);
+$song = array();
+$song['title']=$data;
+$song['copyright']="";
+$counter = 0;
+while($data=fgets($handle)){
+    $counter++;
+    if(substr($data,0,-2)!=""){
+        if($counter == 3){
+            $key = $data;
+            $song['slides'][$key] = "";
+        }else if($counter > 3){
+            $song['slides'][$key] = $song['slides'][$key]."&quot;".substr($data,0,-2)."&quot;,";
+        }else if($counter == 2){
+            for($i=1;$i<5;$i++){
+                $song['copyright'] = $song['copyright'].$data;
+                $data = fgets($handle);
+            }
+        }
+    }else{
+        if($counter>2) $counter=1;
+    }
+}
+fclose($handle);
+echo "<pre>";
+print_r($song);
+echo "</pre>";
 ?>
