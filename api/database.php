@@ -14,7 +14,10 @@ class Database{
     public function getParts($name,$date){
         require DB_CONFIG_FILE;
         $pdo = new PDO($dns,$user,$psw);
-        $sqlstatement = "SELECT parts.* FROM parts LEFT JOIN events ON parts.eventID = events.id WHERE events.name = ? AND events.date = ? ORDER BY parts.position";
+        $sqlstatement = "SELECT parts.* FROM parts_to_event 
+                            LEFT JOIN events ON parts_to_event.eventID = events.id 
+                            LEFT JOIN parts ON parts_to_event.partID = parts.id
+                            WHERE events.name = ? AND events.date = ? ORDER BY parts.position";
         $statement = $pdo->prepare($sqlstatement);
         $statement->execute(array($name,$date));
         $erg=array();
@@ -24,10 +27,15 @@ class Database{
         return $erg;
     }
 
+    protected function getPartIDByTitle($title){
+        $erg = $this->selectFromDB("parts","id",array(array("title",$title)));
+        return $erg[0]['id'];
+    }
+
     public function getSlides($partname){
         require DB_CONFIG_FILE;
         $pdo = new PDO($dns,$user,$psw);
-        $sqlstatement = "SELECT * FROM slides LEFT JOIN parts ON slides.part_id = parts.id WHERE parts.title = ? ORDER BY slides.position";
+        $sqlstatement = "SELECT * FROM slides LEFT JOIN parts ON slides.partID = parts.id WHERE parts.title = ? ORDER BY slides.position";
         $statement = $pdo->prepare($sqlstatement);
         $statement->execute(array($partname));
         $erg=array();
@@ -61,7 +69,7 @@ class Database{
 
     public function addSlide($data){
         $input = array(
-            array("part_id",$data['part_id']),
+            array("partID",$data['partID']),
             array("title",$data['title']),
             array("shorthand",$data['shorthand']),
             array("position",$data['position']),
@@ -87,9 +95,9 @@ class Database{
         $this->updateDB("parts",$data,$condition);
     }
 
-    public function updateSlide($part_id,$title,array $data){
+    public function updateSlide($partID,$title,array $data){
         $condition = array(
-            array("part_id",$part_id),
+            array("partID",$partID),
             array("title",$title)
         );
         $this->updateDB("slides",$data,$condition);
@@ -103,20 +111,27 @@ class Database{
         $this->deleteFromDB("events",$condition);
     }
 
-    public function deletePart($eventID,$title){
+    public function deletePart($title){
+        $id = $this->getPartIDByTitle($title);
         $condition = array(
-            array("eventID",$eventID),
-            array("title",$title)
+            array("id",$id),
         );
         $this->deleteFromDB("parts",$condition);
+        $condition = array(
+            array("partID",$id),
+        );
+        $this->deleteFromDB("parts_to_event",$condition);
+        $this->deleteFromDB("slides",$condition);
     }
 
-    public function deleteSlide($part_id,$title){
+    public function deleteSlide($partID,$title){
         $condition = array(
-            array("part_id",$part_id),
+            array("partID",$partID),
             array("title",$title)
         );
         $this->deleteFromDB("slides",$condition);
     }
+
+    
 }
 ?>

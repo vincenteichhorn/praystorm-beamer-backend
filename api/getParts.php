@@ -4,7 +4,8 @@
 
   require 'database.php';
   $database = new Database();
-  $data = $database->getParts($_POST['name'],$_POST['date']);
+  //$data = $database->getParts($_POST['name'],$_POST['date']);
+  $data = $database->getParts("praystorm","2020-04-04");
   $list = array();
   foreach($data as $row){
     $list[]=array(
