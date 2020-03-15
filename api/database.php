@@ -27,7 +27,7 @@ class Database{
     public function getSlides($partname){
         require DB_CONFIG_FILE;
         $pdo = new PDO($dns,$user,$psw);
-        $sqlstatement = "SELECT * FROM slides LEFT JOIN parts ON slides.part_id = parts.id WHERE parts.title = ? ORDER BY slides.position";
+        $sqlstatement = "SELECT slides.* FROM slides LEFT JOIN parts ON slides.part_id = parts.id WHERE parts.title = ? ORDER BY slides.position";
         $statement = $pdo->prepare($sqlstatement);
         $statement->execute(array($partname));
         $erg=array();
