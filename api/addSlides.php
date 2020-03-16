@@ -5,7 +5,7 @@ require 'database.php';
 $database = new Database();
 foreach($data as $row){
     $condition = array(
-        array("part_id",$row['part_id']),
+        array("partID",$row['partID']),
         array("title",$row['title'])
     );
     if($database->countElements("slides",$condition)==0){

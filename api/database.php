@@ -27,7 +27,7 @@ class Database{
         return $erg;
     }
 
-    protected function getPartIDByTitle($title){
+    public function getPartIDByTitle($title){
         $erg = $this->selectFromDB("parts","id",array(array("title",$title)));
         return $erg[0]['id'];
     }
@@ -56,14 +56,12 @@ class Database{
 
     public function addPart($data){
         $input = array(
-            array("eventID",$data['eventID']),
             array("title",$data['title']),
-            array("position",$data['position']),
             array("type",$data['type']),
-            array("author",$data['author']),
-            array("album",$data['album']),
             array("copyright",$data['copyright']),
         );
+        if(isset($data['author']))$input[] =  array("author",$data['author']);          
+        if(isset($data['album']))$input[] =  array("album",$data['album']); 
         $this->writeInDB("parts",$input);
     }
 
