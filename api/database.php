@@ -14,7 +14,7 @@ class Database{
     public function getParts($name,$date){
         require DB_CONFIG_FILE;
         $pdo = new PDO($dns,$user,$psw);
-        $sqlstatement = "SELECT parts.* FROM parts_to_event 
+        $sqlstatement = "SELECT parts.*, parts_to_event.position FROM parts_to_event 
                             LEFT JOIN events ON parts_to_event.eventID = events.id 
                             LEFT JOIN parts ON parts_to_event.partID = parts.id
                             WHERE events.name = ? AND events.date = ? ORDER BY parts.position";
@@ -54,7 +54,7 @@ class Database{
         $this->writeInDB("events",$input);
     }
 
-    public function addPart($data){
+    public function addPart($data, $event = False){
         $input = array(
             array("title",$data['title']),
             array("type",$data['type']),
@@ -63,6 +63,15 @@ class Database{
         if(isset($data['author']))$input[] =  array("author",$data['author']);          
         if(isset($data['album']))$input[] =  array("album",$data['album']); 
         $this->writeInDB("parts",$input);
+        if($event != False){
+            $partID = $this->getPartIDByTitle($data['title']);
+            $input = array(
+                array("eventID",$event['eventID']),
+                array("partID",$partID),
+                array("position",$event['position']),
+            );
+            $this->writeInDB("parts_to_event",$input);
+        }
     }
 
     public function addSlide($data){

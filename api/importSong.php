@@ -53,7 +53,9 @@ $partID = $database->getPartIDByTitle($song['title']);
 foreach($song['slides'] as $title=>$slide){
     $data[$i]['partID'] = $partID;
     $data[$i]['title'] = $title;
-    $data[$i]['shorthand'] = $title[0].explode(" ",$title)[1];
+    $shorthand = $title[0];
+    if(isset(explode(" ",$title)[1])) $shorthand = $shorthand.explode(" ",$title)[1];
+    $data[$i]['shorthand'] = $shorthand;
     $data[$i]['position'] = $i;
     $data[$i]['type'] = "SONGPART";
     $data[$i]['data'] = '{"lyrics": ['.$song['slides'][$title].'],}';
@@ -75,4 +77,5 @@ foreach($data as $row){
 echo "<pre>";
 print_r($song);
 echo "</pre>";
+unlink($uploadfile);
 ?>
