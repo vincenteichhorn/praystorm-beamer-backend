@@ -1,14 +1,14 @@
 <?php
   header("Access-Control-Allow-Origin: *");
+  header("Access-Control-Allow-Headers: *");
   header("Content-Type: application/json; charset=UTF-8");
 
   require 'database.php';
   $database = new Database();
-  //$data = $database->getParts($_POST['name'],$_POST['date']);
-  $data = $database->getParts("praystorm","2020-04-04");
+  $data = $database->getParts($_POST['name'], $_POST['date']);
   $list = array();
-  foreach($data as $row){
-    $list[]=array(
+  foreach($data as $row){ 
+    $list[] = array(
       "title"=>$row['title'],
       "position"=>$row['position'],
       "type"=>$row['type'],

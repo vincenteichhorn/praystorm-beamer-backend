@@ -7,11 +7,11 @@
   $data = $database->getSlides($_POST['partname']);
   $list = array();
   foreach($data as $row){
-    $list[]=array(
-      "title"=>$row['title'],
-      "shorthand"=>$row['shorthand'],
-      "type"=>$row['type'],
-      "data"=>$row['data']
+    $list[] = array(
+      "title" => $row['title'],
+      "shorthand" => $row['shorthand'],
+      "type" => $row['type'],
+      "data" => json_decode($row['data'], true),
     );    
   }
   echo json_encode($list);

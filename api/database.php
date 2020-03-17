@@ -11,7 +11,7 @@ class Database{
         return $erg;
     }
 
-    public function getParts($name,$date){
+    public function getParts($name, $date){
         require DB_CONFIG_FILE;
         $pdo = new PDO($dns,$user,$psw);
         $sqlstatement = "SELECT parts.*, parts_to_event.position FROM parts_to_event 
@@ -19,7 +19,7 @@ class Database{
                             LEFT JOIN parts ON parts_to_event.partID = parts.id
                             WHERE events.name = ? AND events.date = ? ORDER BY parts.position";
         $statement = $pdo->prepare($sqlstatement);
-        $statement->execute(array($name,$date));
+        $statement->execute(array($name, $date));
         $erg=array();
         while($row = $statement->fetch()) {
             $erg[]=$row;
@@ -35,7 +35,7 @@ class Database{
     public function getSlides($partname){
         require DB_CONFIG_FILE;
         $pdo = new PDO($dns,$user,$psw);
-        $sqlstatement = "SELECT * FROM slides LEFT JOIN parts ON slides.partID = parts.id WHERE parts.title = ? ORDER BY slides.position";
+        $sqlstatement = "SELECT slides.* FROM slides LEFT JOIN parts ON slides.part_id = parts.id WHERE parts.title = ? ORDER BY slides.position";
         $statement = $pdo->prepare($sqlstatement);
         $statement->execute(array($partname));
         $erg=array();
