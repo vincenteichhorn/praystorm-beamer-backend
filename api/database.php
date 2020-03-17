@@ -58,7 +58,7 @@ class Database{
         $input = array(
             array("title",$data['title']),
             array("type",$data['type']),
-            array("copyright",$data['copyright']),
+            array("copyright",$data['copyright'])
         );
         if(isset($data['author']))$input[] =  array("author",$data['author']);          
         if(isset($data['album']))$input[] =  array("album",$data['album']); 
@@ -74,6 +74,15 @@ class Database{
         }
     }
 
+    public function addPartToEvent($eventID,$partID,$position){
+        $input = array(
+            array("eventID",$eventID),
+            array("partID",$partID),
+            array("position",$position)
+        );
+        $this->writeInDB("parts_to_event",$input);
+    }
+
     public function addSlide($data){
         $input = array(
             array("partID",$data['partID']),
@@ -84,6 +93,17 @@ class Database{
             array("data",$data['data'])
         );
         $this->writeInDB("slides",$input);
+    }
+
+    public function changePartPositionInEvent($eventID,$partID,$position){
+        $input = array(
+            array("position",$position)
+        );
+        $condition = array(
+            array("eventID",$eventID),
+            array("partID",$partID)
+        );
+        $this->updateDB("parts_to_event",$input,$condition);
     }
 
     public function updateEvent($name,$date,array $data){
@@ -121,14 +141,23 @@ class Database{
     public function deletePart($title){
         $id = $this->getPartIDByTitle($title);
         $condition = array(
-            array("id",$id),
+            array("id",$id)
         );
         $this->deleteFromDB("parts",$condition);
         $condition = array(
-            array("partID",$id),
+            array("partID",$id)
         );
         $this->deleteFromDB("parts_to_event",$condition);
         $this->deleteFromDB("slides",$condition);
+    }
+
+    public function deletePartFromEvent($eventID,$partID){
+        $condition = array(
+            array("eventID",$eventID),
+            array("partID",$partID)
+        );
+        $this->deleteFromDB("parts_to_event",$condition);
+
     }
 
     public function deleteSlide($partID,$title){
