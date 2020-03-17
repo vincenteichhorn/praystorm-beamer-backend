@@ -157,7 +157,6 @@ class Database{
             array("partID",$partID)
         );
         $this->deleteFromDB("parts_to_event",$condition);
-
     }
 
     public function deleteSlide($partID,$title){
