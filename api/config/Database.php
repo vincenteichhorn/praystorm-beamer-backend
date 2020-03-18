@@ -17,7 +17,7 @@ class Database{
         $sqlstatement = "SELECT parts.*, parts_to_event.position FROM parts_to_event 
                             LEFT JOIN events ON parts_to_event.eventID = events.id 
                             LEFT JOIN parts ON parts_to_event.partID = parts.id
-                            WHERE events.name = ? AND events.date = ? ORDER BY parts.position";
+                            WHERE events.name = ? AND events.date = ? ORDER BY parts_to_event.position";
         $statement = $pdo->prepare($sqlstatement);
         $statement->execute(array($name, $date));
         $erg=array();
@@ -35,7 +35,9 @@ class Database{
     public function getSlides($partname){
         require DB_CONFIG_FILE;
         $pdo = new PDO($dns,$user,$psw);
-        $sqlstatement = "SELECT slides.* FROM slides LEFT JOIN parts ON slides.part_id = parts.id WHERE parts.title = ? ORDER BY slides.position";
+        $sqlstatement = "SELECT slides.* FROM slides 
+                            LEFT JOIN parts ON slides.partID = parts.id 
+                            WHERE parts.title = ? ORDER BY slides.position";
         $statement = $pdo->prepare($sqlstatement);
         $statement->execute(array($partname));
         $erg=array();
