@@ -3,7 +3,7 @@
   header("Access-Control-Allow-Headers: *");
   header("Content-Type: application/json; charset=UTF-8");
 
-  require 'database.php';
+  require 'config/Database.php';
   $database = new Database();
   $data = $database->getParts($_POST['name'], $_POST['date']);
   $list = array();

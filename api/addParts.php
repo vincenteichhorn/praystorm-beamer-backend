@@ -1,7 +1,7 @@
 <?php
 $data = json_decode($_POST['data']);
 
-require 'database.php';
+require 'config/Database.php';
 $database = new Database();
 foreach($data as $row){
     $condition = array(

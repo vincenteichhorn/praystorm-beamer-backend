@@ -1,6 +1,6 @@
 <?php
 $data = json_decode($_POST['data']);
-require 'database.php';
+require 'config/Database.php';
 $database = new Database();
 $condition = array(
     array("name",$data['name']),

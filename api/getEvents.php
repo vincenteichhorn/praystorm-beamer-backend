@@ -2,7 +2,7 @@
   header("Access-Control-Allow-Origin: *");
   header("Content-Type: application/json; charset=UTF-8");
   
-  require 'database.php';
+  require 'config/Database.php';
   $database = new Database();
   $data = $database->getEvents();
   

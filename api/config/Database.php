@@ -1,6 +1,6 @@
 <?php
-define("DB_CONFIG_FILE","config/config.php");
-require "dbhandling.php";
+define("DB_CONFIG_FILE","config.php");
+require "DBHandling.php";
 
 class Database{
 
