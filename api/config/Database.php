@@ -42,8 +42,28 @@ class Database{
         $statement->execute(array($partname));
         $erg=array();
         while($row = $statement->fetch()) {
+            $data = (array) json_decode($row['data']);
+            $data['style'] = $this->getSlideStyle($row['styleID']);
+            $row['data'] = $data;
+            $row['data'] = json_encode($row['data']);
             $erg[]=$row;
         }
+        return $erg;
+    }
+
+    protected function getSlideStyle(int $id = 0){
+        $data = $this->selectFromDB("slideStyle","*",array(array("id",$id)));
+        if(count($data)==0)$data = $this->selectFromDB("slideStyle","*",array(array("id",1)));
+        $erg = array(
+            "backgroundImage" => $data[0]['backgroundImage'],
+            "backgroundColor" => $data[0]['backgroundColor'],
+            "verseFontSize" => (int) $data[0]['verseFontSize'],
+            "verseSpacing" => (int) $data[0]['verseSpacing'],
+            "copyrightFontSize" => (int) $data[0]['copyrightFontSize'],
+            "copyrightColor" => $data[0]['copyrightColor'],
+            "verseColor" => $data[0]['verseColor'],
+            "additive" => $data[0]['additive']
+        );
         return $erg;
     }
 
