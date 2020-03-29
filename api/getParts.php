@@ -1,7 +1,7 @@
 <?php
   header("Access-Control-Allow-Origin: *");
   require "enumnerations/Enumerations.php";
-  if($_SERVER["REQUESR_METHOD" == RequestMethods::POST]) {
+  if($_SERVER["REQUESR_METHOD"] == RequestMethods::POST) {
     if(isset($_POST['name']) && isset($_POST['date'])) {
       require 'config/Database.php';
       $database = new Database();
