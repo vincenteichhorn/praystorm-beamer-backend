@@ -62,7 +62,7 @@ class Database{
             "copyrightFontSize" => (int) $data[0]['copyrightFontSize'],
             "copyrightColor" => $data[0]['copyrightColor'],
             "verseColor" => $data[0]['verseColor'],
-            "additive" => $data[0]['additive']
+            //"additive" => $data[0]['additive']
         );
         return $erg;
     }
