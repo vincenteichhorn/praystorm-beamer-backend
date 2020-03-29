@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 29. Mrz 2020 um 17:41
+-- Erstellungszeit: 21. Mrz 2020 um 18:52
 -- Server-Version: 10.1.19-MariaDB
 -- PHP-Version: 7.0.13
 
@@ -144,7 +144,7 @@ CREATE TABLE `slidestyle` (
   `id` int(11) NOT NULL,
   `backgroundImage` varchar(100) NOT NULL,
   `backgroundColor` varchar(7) NOT NULL,
-  `verseFontSize` int(2) NOT NULL DEFAULT '7',
+  `verseFontSize` int(2) NOT NULL,
   `verseSpacing` int(2) NOT NULL,
   `copyrightFontSize` int(2) NOT NULL,
   `copyrightColor` varchar(7) NOT NULL,
@@ -157,7 +157,7 @@ CREATE TABLE `slidestyle` (
 --
 
 INSERT INTO `slidestyle` (`id`, `backgroundImage`, `backgroundColor`, `verseFontSize`, `verseSpacing`, `copyrightFontSize`, `copyrightColor`, `verseColor`, `additive`) VALUES
-(1, '/media/home/presenter-card.jpg', 'black', 7, 20, 12, 'orange', 'white', '');
+(1, '/media/home/presenter-card.jpg', 'black', 48, 20, 12, 'orange', 'white', '');
 
 --
 -- Indizes der exportierten Tabellen
@@ -225,7 +225,7 @@ ALTER TABLE `slides`
 -- AUTO_INCREMENT für Tabelle `slidestyle`
 --
 ALTER TABLE `slidestyle`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Constraints der exportierten Tabellen
 --
