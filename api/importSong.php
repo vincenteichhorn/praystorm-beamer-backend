@@ -21,9 +21,9 @@ while($data=fgets($handle)){
     if(substr($data,0,-2)!=""){
         if($counter == 3){
             $key = $data;
-            $song['slides'][$key] = "";
+            $song['slides'][$key] = array();
         }else if($counter > 3){
-            $song['slides'][$key] = $song['slides'][$key].'"'.substr($data,0,-2).'",';
+            $song['slides'][$key][] = substr($data,0,-2);
         }else if($counter == 2){
             for($i=1;$i<5;$i++){
                 $song['copyright'] = $song['copyright'].$data;
@@ -36,7 +36,6 @@ while($data=fgets($handle)){
 }
 fclose($handle);
 
-
 require 'config/Database.php';
 $database = new Database();
 $condition = array(
@@ -45,7 +44,7 @@ $condition = array(
 if($database->countElements("parts",$condition)==0){
     $database->addPart($song);
 }else{
-    echo "Part existiert bereits";
+    echo die("Part existiert bereits");
 }
 $data = array();
 $i = 0;
@@ -58,7 +57,12 @@ foreach($song['slides'] as $title=>$slide){
     $data[$i]['shorthand'] = $shorthand;
     $data[$i]['position'] = $i;
     $data[$i]['type'] = "SONGPART";
-    $data[$i]['data'] = '{"lyrics": ['.$song['slides'][$title].'],}';
+    $slidedata = array(
+        "lyrics" => $song['slides'][$title], 
+        "image" => "http://localhost/praystorm-beamer-backend/images/test.jpg",
+        "video" => "http://localhost/praystorm-beamer-backend/images/video.mp4"
+    );
+    $data[$i]['data'] = json_encode($slidedata);
     $i++;
 }
 
@@ -77,5 +81,6 @@ foreach($data as $row){
 echo "<pre>";
 print_r($song);
 echo "</pre>";
+
 unlink($uploadfile);
 ?>

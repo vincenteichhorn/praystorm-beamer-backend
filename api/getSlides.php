@@ -11,7 +11,7 @@
       "title" => $row['title'],
       "shorthand" => $row['shorthand'],
       "type" => $row['type'],
-      "data" => json_decode($row['data'], true),
+      "data" => json_decode($row['data'], true)
     );    
   }
   echo json_encode($list);
