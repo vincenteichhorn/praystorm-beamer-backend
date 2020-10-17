@@ -1,5 +1,5 @@
 <?php
-$data = json_decode($_POST['data']);
+$data = (array) json_decode($_POST['data'], true);
 
 require 'config/Database.php';
 $database = new Database();
