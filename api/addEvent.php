@@ -22,6 +22,6 @@ if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
       header(RequestStatus::badRequest);
     }
 } else {
-header(RequestStatus::methodNotAllowed);
+    header(RequestStatus::methodNotAllowed);
 }   
 ?>
