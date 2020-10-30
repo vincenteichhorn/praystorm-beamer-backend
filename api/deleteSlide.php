@@ -5,7 +5,7 @@ $data = array(
     "part_id" => ''
 );
 
-require 'config/Database.php';
+require 'db_handling/Database.php';
 $database = new Database();
 $database->deleteSlide($data['part_id'],$data['slide']);
 ?>

@@ -3,7 +3,7 @@
   require "enumerations/Enumerations.php";
   if($_SERVER['REQUEST_METHOD'] == RequestMethods::GET) {
     header("Content-Type: application/json; charset=UTF-8");
-    require 'config/Database.php';
+    require 'db_handling/Database.php';
     $database = new Database();
     $data = $database->getEvents();
     

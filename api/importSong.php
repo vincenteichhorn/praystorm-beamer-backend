@@ -36,7 +36,7 @@ while($data=fgets($handle)){
 }
 fclose($handle);
 
-require 'config/Database.php';
+require 'db_handling/Database.php';
 $database = new Database();
 $condition = array(
     array("title",$song['title'])

@@ -2,7 +2,7 @@
   header("Access-Control-Allow-Origin: *");
   header("Content-Type: application/json; charset=UTF-8");
 
-  require 'config/Database.php';
+  require 'db_handling/Database.php';
   $database = new Database();
   $data = $database->getSlides($_POST['partname']);
   $list = array();

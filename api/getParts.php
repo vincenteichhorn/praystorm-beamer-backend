@@ -4,7 +4,7 @@
   if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
     if(isset($_POST['name']) && isset($_POST['date'])) {
       header("Content-Type: application/json; charset=UTF-8");
-      require 'config/Database.php';
+      require 'db_handling/Database.php';
       $database = new Database();
       $data = $database->getParts($_POST['name'], $_POST['date']);
       $list = array();

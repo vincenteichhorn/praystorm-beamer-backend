@@ -1,6 +1,6 @@
 <?php
 
-trait DBHandling{
+trait DBHandling {
     protected function selectFromDB(string $table,string $columns,array $condition=array(),string $filter=""){
         require DB_CONFIG_FILE;
         $pdo = new PDO($dns,$user,$psw);
@@ -24,7 +24,7 @@ trait DBHandling{
         return $erg;
     }
 
-    public function countElements($table,$filter=array()){
+    public function countElements($table, $filter = array()){
         require DB_CONFIG_FILE;
         $pdo = new PDO($dns,$user,$psw);
         $sqlfilter="";
@@ -33,9 +33,9 @@ trait DBHandling{
             $sqlfilter=" WHERE";
             foreach($filter as $element){
                 $sqlfilter = $sqlfilter." ".$element[0]."=? AND";
-                $sqlinput[]=$element[1];
+                $sqlinput[] = $element[1];
             }
-            $sqlfilter = substr($sqlfilter,0,-4);
+            $sqlfilter = substr($sqlfilter, 0, -4);
         }
         $sql = "SELECT COUNT(id) AS number FROM ".$table.$sqlfilter;
         $statement = $pdo->prepare($sql);
