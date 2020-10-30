@@ -16,7 +16,7 @@ if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
             $database->addEvent(array("name" => $name, "date" => $date, "description" => $desc));
         } else {
             header(RequestStatus::badRequest);
-            echo "Event existiert bereits";
+            echo json_encode(array("error" => 'Das Event konnte nicht erstellt werden, da es bereits existiert'));
         }
     } else {
       header(RequestStatus::badRequest);
