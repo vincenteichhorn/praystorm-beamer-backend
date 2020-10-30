@@ -15,6 +15,7 @@ if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
         if($database->countElements("events", $condition) == 0){
             $database->addEvent(array("name" => $name, "date" => $date, "description" => $desc));
         } else {
+            header(RequestStatus::badRequest);
             echo "Event existiert bereits";
         }
     } else {
