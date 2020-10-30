@@ -9,8 +9,7 @@ if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
         $date = $_POST['date'];
         $desc = $_POST['description'];
         $condition = array(
-            array("name", $name),
-            array("date", $date)
+            array("name", $name)
         );
         if($database->countElements("events", $condition) == 0){
             $database->addEvent(array("name" => $name, "date" => $date, "description" => $desc));
