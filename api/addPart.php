@@ -1,4 +1,5 @@
 <?php
+/*
 $data = (array) json_decode($_POST['data'], true);
 
 require 'db_handling/Database.php';
@@ -13,7 +14,7 @@ foreach($data as $row){
         echo "Part existiert bereits";
     }
 }
-
+*/
 header("Access-Control-Allow-Origin: *");
 require "enumerations/Enumerations.php";
 if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
