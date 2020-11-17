@@ -136,13 +136,13 @@ class Database{
         $this->updateDB("events",$data,$condition);
     }
 
-    public function updatePart($eventID,$title,array $data){
+/*    public function updatePart($eventID,$title,array $data){  //eventID fehl am Platz
         $condition = array(
             array("eventID",$eventID),
             array("title",$title)
         );
         $this->updateDB("parts",$data,$condition);
-    }
+    }*/
 
     public function updateSlide($partID,$title,array $data){
         $condition = array(
