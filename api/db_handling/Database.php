@@ -30,7 +30,7 @@ class Database{
     public function getParts(){
         require DB_CONFIG_FILE;
         $pdo = new PDO($dns,$user,$psw);
-        $sqlstatement = "SELECT title, parts.type, author FROM parts ORDER BY title GROUP BY parts.type";
+        $sqlstatement = "SELECT parts.title, parts.type, parts.author FROM parts GROUP BY parts.type ORDER BY parts.title";
         $statement = $pdo->prepare($sqlstatement);
         $statement->execute();
         $erg=array();

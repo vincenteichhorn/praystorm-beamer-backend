@@ -30,8 +30,7 @@ if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
             array("title", $title)
         );
         if($database->countElements("parts",$condition)==0){
-            //$database->addPart($row);
-            //TODO: add to database
+            $database->addPart($row);
         } else {
             header(RequestStatus::badRequest);
         }
