@@ -33,7 +33,7 @@ class Database{
         $sqlstatement = "SELECT title, parts.type, author FROM parts
                             WHERE events.name = ? AND events.date = ? ORDER BY title GROUP BY parts.type";
         $statement = $pdo->prepare($sqlstatement);
-        $statement->execute(array($name, $date));
+        $statement->execute();
         $erg=array();
         while($row = $statement->fetch()) {
             $erg[]=$row;
