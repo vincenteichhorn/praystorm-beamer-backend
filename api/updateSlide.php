@@ -8,8 +8,8 @@ if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
         $partAuthor = $_POST['partAuthor'];
         $slideTitle = $_POST['slideTitle'];
         $data = $_POST['data'];
-        $partID = $database->getPartIDByTitleAndAutor($_POST['partTitle'],$_POST['partAuthor']);
         $database = new Database();
+        $partID = $database->getPartIDByTitleAndAutor($_POST['partTitle'],$_POST['partAuthor']);
         $condition = array(
             array("partID",$partID),
             array("title",$slideTitle)
