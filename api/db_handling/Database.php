@@ -173,6 +173,9 @@ class Database{
             array("partID",$partID),
             array("title",$title)
         );
+        $data = array(
+            array("data",$data)
+        );
         $this->updateDB("slides",$data,$condition);
     }
 
