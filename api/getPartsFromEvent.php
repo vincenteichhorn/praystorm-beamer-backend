@@ -11,7 +11,7 @@
       foreach($data as $row){ 
         $list[] = array(
           "title"=>$row['title'],
-          "position"=>$row['position'],
+          "position"=>(int) $row['position'],
           "type"=>$row['type'],
           "author"=>$row['author'],
           "album"=>$row['album'],
