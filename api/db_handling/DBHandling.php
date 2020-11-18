@@ -41,6 +41,7 @@ trait DBHandling {
         echo $sql;
         $statement = $pdo->prepare($sql);
         $statement->execute($sqlinput);
+        echo $sqlstatement;
         $data = $statement->fetch();
         return $data['number'];
     }
