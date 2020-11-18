@@ -43,7 +43,7 @@ class Database{
         return $erg;
     }
 
-    protected function getPartIDByTitleAndAutor($title,$author){
+    public function getPartIDByTitleAndAutor($title,$author){
         $erg = $this->selectFromDB("parts","id",array(array("title",$title),array("author",$author)));
         return $erg[0]['id'];
     }
