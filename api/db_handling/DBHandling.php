@@ -38,6 +38,7 @@ trait DBHandling {
             $sqlfilter = substr($sqlfilter, 0, -4);
         }
         $sql = "SELECT COUNT(id) AS number FROM ".$table.$sqlfilter;
+        echo $sql;
         $statement = $pdo->prepare($sql);
         $statement->execute($sqlinput);
         $data = $statement->fetch();
