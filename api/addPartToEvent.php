@@ -15,7 +15,7 @@ if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
             array("name", $eventName),
             array("date", $eventDate)
         );
-        if($database->countElements("events", $condition) == 1){
+        if($database->countElements("events", $conditionEvent) == 1){
             $database->addPartToEvent($partTitle, $partAuthor, $partPosition, $eventName, $eventDate);
         }else{
             header(RequestStatus::badRequest);
