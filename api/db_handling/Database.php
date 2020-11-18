@@ -47,6 +47,11 @@ class Database{
         return $erg[0]['id'];
     }
 
+    protected function getEventIDByNameAndDate($name,$date){
+        $erg = $this->selectFromDB("events","id",array(array("name",$name),array("date",$date)));
+        return $erg[0]['id'];
+    }
+
     public function getSlides($partname){
         require DB_CONFIG_FILE;
         $pdo = new PDO($dns,$user,$psw);
@@ -111,11 +116,13 @@ class Database{
         }
     }
 
-    public function addPartToEvent($eventID,$partID,$position){
+    public function addPartToEvent($partTitle, $partAuthor, $partPosition, $eventName, $eventDate){
+        $partID = $this->getPartIDByTitleAndAutor($partTitle,$partAuthor);
+        $eventID = $this->getEventIDByNameAndDate($eventName,$eventDate);
         $input = array(
             array("eventID",$eventID),
             array("partID",$partID),
-            array("position",$position)
+            array("position",$partPosition)
         );
         $this->writeInDB("parts_to_event",$input);
     }

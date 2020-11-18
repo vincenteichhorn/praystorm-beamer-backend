@@ -2,13 +2,24 @@
 header("Access-Control-Allow-Origin: *");
 require "enumerations/Enumerations.php";
 if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
-    if(isset($_POST['partID']) && isset($_POST['eventID']) && isset($_POST['position'])) {
+    if(isset($_POST['partTitle']) && isset($_POST['partAuthor']) && isset($_POST['eventName']) 
+       && isset($_POST['eventDate']) && isset($_POST['partPosition'])) {
         require 'db_handling/Database.php';
         $database = new Database();
-        $partID = $_POST['partID'];
-        $eventID = $_POST['eventID'];
-        $position = $_POST['position'];
-        $database->addPartToEvent($eventID,$partID,$position);
+        $partTitle = $_POST['partTitle'];
+        $partAuthor = $_POST['partAuthor'];
+        $eventName = $_POST['eventName'];
+        $eventDate = $_POST['eventDate'];
+        $partPosition = $_POST['partPosition'];
+        $conditionEvent = array(
+            array("name", $name),
+            array("date", $date)
+        );
+        if($database->countElements("events", $condition) == 1){
+            $database->addPartToEvent($partTitle, $partAuthor, $partPosition, $eventName, $eventDate);
+        }else{
+            header(RequestStatus::badRequest);
+        }
     } else {
       header(RequestStatus::badRequest);
     }

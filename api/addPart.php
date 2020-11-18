@@ -29,7 +29,8 @@ if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
             "copyright" => $_POST['copyright'];
         )
         $condition = array(
-            array("title", $title)
+            array("title", $title),
+            array("author", $author)
         );
         if($database->countElements("parts",$condition)==0){
             $database->addPart($data);
