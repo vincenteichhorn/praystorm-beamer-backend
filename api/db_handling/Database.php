@@ -11,13 +11,27 @@ class Database{
         return $erg;
     }
 
-    public function getParts($name, $date){
+    public function getPartsFromEvent($name, $date){
         require DB_CONFIG_FILE;
         $pdo = new PDO($dns,$user,$psw);
         $sqlstatement = "SELECT parts.*, parts_to_event.position FROM parts_to_event 
                             LEFT JOIN events ON parts_to_event.eventID = events.id 
                             LEFT JOIN parts ON parts_to_event.partID = parts.id
                             WHERE events.name = ? AND events.date = ? ORDER BY parts_to_event.position";
+        $statement = $pdo->prepare($sqlstatement);
+        $statement->execute(array($name, $date));
+        $erg=array();
+        while($row = $statement->fetch()) {
+            $erg[]=$row;
+        }
+        return $erg;
+    }
+
+    public function getParts(){
+        require DB_CONFIG_FILE;
+        $pdo = new PDO($dns,$user,$psw);
+        $sqlstatement = "SELECT title, parts.type, author FROM parts
+                            WHERE events.name = ? AND events.date = ? ORDER BY title GROUP BY parts.type";
         $statement = $pdo->prepare($sqlstatement);
         $statement->execute(array($name, $date));
         $erg=array();
