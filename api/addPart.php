@@ -21,16 +21,18 @@ if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
     if(isset($_POST['title']) && isset($_POST['type']) && isset($_POST['author']) && isset($_POST['album']) && isset($_POST['copyright']) && isset($_POST['eventName'])) {
         require 'db_handling/Database.php';
         $database = new Database();
-        $title = $_POST['title'];
-        $type = $_POST['type'];
-        $author = $_POST['author'];
-        $album = $_POST['album'];
-        $copyright = $_POST['copyright'];
+        $data = array(
+            "title" => $_POST['title'];
+            "type" => $_POST['type'];
+            "author" => $_POST['author'];
+            "album" => $_POST['album'];
+            "copyright" => $_POST['copyright'];
+        )
         $condition = array(
             array("title", $title)
         );
         if($database->countElements("parts",$condition)==0){
-            $database->addPart($row);
+            $database->addPart($data);
         } else {
             header(RequestStatus::badRequest);
         }

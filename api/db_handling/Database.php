@@ -30,7 +30,7 @@ class Database{
     public function getParts(){
         require DB_CONFIG_FILE;
         $pdo = new PDO($dns,$user,$psw);
-        $sqlstatement = "SELECT parts.title, parts.type, parts.author FROM parts ORDER BY parts.type, parts.title";
+        $sqlstatement = "SELECT parts.title, parts.type, parts.author, parts.copyright, parts.position, parts.album FROM parts ORDER BY parts.type, parts.title";
         $statement = $pdo->prepare($sqlstatement);
         $statement->execute();
         $erg=array();
@@ -40,8 +40,8 @@ class Database{
         return $erg;
     }
 
-    public function getPartIDByTitle($title){
-        $erg = $this->selectFromDB("parts","id",array(array("title",$title)));
+    protected function getPartIDByTitleAndAutor($title,$author){
+        $erg = $this->selectFromDB("parts","id",array(array("title",$title),array("author",$author)));
         return $erg[0]['id'];
     }
 
@@ -99,7 +99,7 @@ class Database{
         if(isset($data['album']))$input[] =  array("album",$data['album']); 
         $this->writeInDB("parts",$input);
         if($event != False){
-            $partID = $this->getPartIDByTitle($data['title']);
+            $partID = $this->getPartIDByTitleAndAuthor($data['title'],$data['author']);
             $input = array(
                 array("eventID",$event['eventID']),
                 array("partID",$partID),
@@ -119,8 +119,9 @@ class Database{
     }
 
     public function addSlide($data){
+        $partID = $this->getPartIDByTitleAndAuthor($data['partTitle'],$data['partAuthor']);
         $input = array(
-            array("partID",$data['partID']),
+            array("partID",$partID),
             array("title",$data['title']),
             array("shorthand",$data['shorthand']),
             array("position",$data['position']),
@@ -173,8 +174,8 @@ class Database{
         $this->deleteFromDB("events",$condition);
     }
 
-    public function deletePart($title){
-        $id = $this->getPartIDByTitle($title);
+    public function deletePart($title,$author){
+        $id = $this->getPartIDByTitleAndAuthor($title,$author);
         $condition = array(
             array("id",$id)
         );
