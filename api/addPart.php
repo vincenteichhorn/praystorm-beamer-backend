@@ -33,8 +33,8 @@ if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
         $eventDate = $_POST['eventDate'];
         $partPosition = $_POST['partPosition'];
         $condition = array(
-            array("title", $title),
-            array("author", $author)
+            array("title", $_POST['partTitle']),
+            array("author", $data['author'])
         );
         if($database->countElements("parts",$condition)==0){
             $database->addPart($data);
@@ -46,7 +46,7 @@ if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
             array("date", $eventDate)
         );
         if($database->countElements("events", $conditionEvent) == 1){
-            $database->addPartToEvent($partTitle, $partAuthor, $partPosition, $eventName, $eventDate);
+            $database->addPartToEvent($_POST['partTitle'], $_POST['partAuthor'], $partPosition, $eventName, $eventDate);
         }else{
             header(RequestStatus::badRequest);
         }
