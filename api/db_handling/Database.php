@@ -32,6 +32,7 @@ class Database{
         $pdo = new PDO($dns,$user,$psw);
         $sqlstatement = "SELECT parts.title, parts.type, parts.author, parts.album, parts.copyright, parts_to_event.position FROM parts_to_event 
                             LEFT JOIN parts ON parts_to_event.partID = parts.id
+                            GROUP BY parts.title, parts.author
                             ORDER BY parts.type, parts.title";
         $statement = $pdo->prepare($sqlstatement);
         $statement->execute();
