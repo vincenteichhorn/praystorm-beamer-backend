@@ -7,8 +7,7 @@ if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
         $database = new Database();
         foreach($data as $row){
             $condition = array(
-                array("partTitle",$_POST['partTitle']),
-                array("partAuthor",$_POST['partAuthor']),
+                array("partID",$database->getPartIDByTitleAndAutor($_POST['partTitle'],$_POST['partAuthor'])),
                 array("title",$row['title'])
             );
             if($database->countElements("parts",$condition)==0){
