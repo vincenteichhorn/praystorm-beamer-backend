@@ -168,7 +168,7 @@ class Database{
         $this->updateDB("parts",$data,$condition);
     }*/
 
-    public function updateSlide($partID,$title,array $data){
+    public function updateSlide($partID,$title,$data){
         $condition = array(
             array("partID",$partID),
             array("title",$title)

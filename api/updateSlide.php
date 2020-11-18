@@ -15,7 +15,7 @@ if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
             array("title",$slideTitle)
         );
         if($database->countElements("parts",$condition)==0){
-            $database->updateSlide($partId,$slideTitle,$data);
+            $database->updateSlide($partID,$slideTitle,$data);
         } else {
             header(RequestStatus::badRequest);
         }
