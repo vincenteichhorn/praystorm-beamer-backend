@@ -11,7 +11,10 @@
     $list[] = array(
         "title"=>$row['title'],
         "type"=>$row['type'],
-        "author"=>$row['author']
+        "author"=>$row['author'],
+        "album"=>$row['album'],
+        "copyright"=>$row['copyright'],
+        "position"=>$row['position']
     );    
     }
     echo json_encode($list);

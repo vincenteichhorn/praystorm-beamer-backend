@@ -30,7 +30,9 @@ class Database{
     public function getParts(){
         require DB_CONFIG_FILE;
         $pdo = new PDO($dns,$user,$psw);
-        $sqlstatement = "SELECT parts.title, parts.type, parts.author, parts.copyright, parts.position, parts.album FROM parts ORDER BY parts.type, parts.title";
+        $sqlstatement = "SELECT parts.title, parts.type, parts.author, parts.album, parts.copyright, parts_to_event.position FROM parts_to_event 
+                            LEFT JOIN parts ON parts_to_event.partID = parts.id
+                            ORDER BY parts.type, parts.title";
         $statement = $pdo->prepare($sqlstatement);
         $statement->execute();
         $erg=array();
