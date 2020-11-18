@@ -49,9 +49,11 @@ if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
             $database->addPartToEvent($_POST['partTitle'], $_POST['partAuthor'], $partPosition, $eventName, $eventDate);
         }else{
             header(RequestStatus::badRequest);
+            echo "1";
         }
     } else {
       header(RequestStatus::badRequest);
+      echo "2";
     }
 } else {
     header(RequestStatus::methodNotAllowed);
