@@ -29,10 +29,9 @@ if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
             "album" => $_POST['partAlbum'];
             "copyright" => $_POST['partCopyright'];
         )
-        /*
-        "copyright" => $_POST['partPosition'];
-        "copyright" => $_POST['eventDate'];
-        "copyright" => $_POST['eventName'];*/
+        $eventName = $_POST['eventName'];
+        $eventDate = $_POST['eventDate'];
+        $partPosition = $_POST['partPosition'];
         $condition = array(
             array("title", $title),
             array("author", $author)
