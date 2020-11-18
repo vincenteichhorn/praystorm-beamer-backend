@@ -23,12 +23,12 @@ if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
         require 'db_handling/Database.php';
         $database = new Database();
         $data = array(
-            "title" => $_POST['partTitle'];
-            "type" => $_POST['partType'];
-            "author" => $_POST['partAuthor'];
-            "album" => $_POST['partAlbum'];
-            "copyright" => $_POST['partCopyright'];
-        )
+            "title" => $_POST['partTitle'],
+            "type" => $_POST['partType'],
+            "author" => $_POST['partAuthor'],
+            "album" => $_POST['partAlbum'],
+            "copyright" => $_POST['partCopyright']
+        );
         $eventName = $_POST['eventName'];
         $eventDate = $_POST['eventDate'];
         $partPosition = $_POST['partPosition'];
