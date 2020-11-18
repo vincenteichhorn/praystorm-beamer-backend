@@ -5,7 +5,11 @@ if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
     if(isset($_POST['data']) AND isset($_POST['partTitle']) AND isset($_POST['partAuthor']) AND isset($_POST['slideTitle'])) {
         require 'db_handling/Database.php';
         $partTitle = $_POST['partTitle'];
-        $partAuthor = $_POST['partAuthor'];
+        if($_POST['partAuthor']="null"){
+            $partAuthor = "";
+        }else{
+            $partAuthor = $_POST['partAuthor'];
+        };
         $slideTitle = $_POST['slideTitle'];
         $data = $_POST['data'];
         $database = new Database();
@@ -26,16 +30,4 @@ if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
 } else {
     header(RequestStatus::methodNotAllowed);
 }
-
-/*
-$data = (array) json_decode($_POST['data'], true);
-
-require 'db_handling/Database.php';
-$database = new Database();
-$input = array();
-foreach($data['newdata'] as $key=>$value){
-    $input[]=array($key,$value);
-}
-$database->updateSlide($data['part_id'],$data['title'],$input);
-*/
 ?>
