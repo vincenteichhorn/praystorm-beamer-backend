@@ -45,7 +45,10 @@ class Database{
 
     public function getPartIDByTitleAndAutor($title,$author){
         $erg = $this->selectFromDB("parts","id",array(array("title",$title),array("author",$author)));
-        return $erg[0]['id'];
+        if(sizeof($erg)!=0) {
+            return $erg[0]['id'];
+        }
+        return false;
     }
 
     protected function getEventIDByNameAndDate($name,$date){
@@ -160,13 +163,12 @@ class Database{
         $this->updateDB("events",$data,$condition);
     }
 
-/*    public function updatePart($eventID,$title,array $data){  //eventID fehl am Platz
+    public function updatePart($partID, array $data){ 
         $condition = array(
-            array("eventID",$eventID),
-            array("title",$title)
+            array("id",$partID),
         );
-        $this->updateDB("parts",$data,$condition);
-    }*/
+        $this->updateDB("parts", $data, $condition);
+    }
 
     public function updateSlide($partID,$title,$data){
         $condition = array(
