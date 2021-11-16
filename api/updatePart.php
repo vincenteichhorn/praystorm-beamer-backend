@@ -5,7 +5,7 @@ if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
     if(isset($_POST['oldPartTitle']) AND (isset($_POST['partTitle']) AND isset($_POST['oldPartAuthor']) AND isset($_POST['partAuthor']))) {
         require 'db_handling/Database.php';
         $database = new Database();
-        echo $partID = $database->getPartIDByTitleAndAutor($_POST['oldPartTitle'],$_POST['oldPartAuthor']);
+        $partID = $database->getPartIDByTitleAndAutor($_POST['oldPartTitle'],$_POST['oldPartAuthor']);
         if(!$partID) {
             header(RequestStatus::badRequest);
         } else {
@@ -21,7 +21,17 @@ if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
                 array("indivSeq", $_POST['partPosition']),
             );
             $database->updatePart($partID, $data);
+
+            $data = $database->getSlides($_POST['partTitle']);
+            foreach($data as $row){
+                if($_POST['partType'] == 'INSERT') {
+                    $database->updateSlide($partID,$row['title'], $row['title'], 'IMAGE', $row['data']);
+                } else {
+                    $database->updateSlide($partID,$row['title'], $row['title'], 'SONGPART', $row['data']);
+                }  
+            }
         }
+
     } else {
       header(RequestStatus::badRequest);
     }
