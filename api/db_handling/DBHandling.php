@@ -58,6 +58,7 @@ trait DBHandling {
         $sql=substr($sql,0,-2).") VALUES ".$sqlvalue;
         $pdo = new PDO($dns,$user,$psw);
         $statement = $pdo->prepare($sql);
+        print_r($sqlinput);
         $statement->execute($sqlinput);
     }
 

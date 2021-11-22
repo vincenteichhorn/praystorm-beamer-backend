@@ -7,7 +7,7 @@ class Database{
     use DBHandling;
 
     public function getEvents(){
-        $erg = $this->selectFromDB("events","name, date, description");
+        $erg = $this->selectFromDB("events","name, date, description", array(), "ORDER BY date DESC");
         return $erg;
     }
 
@@ -132,16 +132,7 @@ class Database{
     }
 
     public function addSlide($data){
-        $partID = $this->getPartIDByTitleAndAuthor($data['partTitle'],$data['partAuthor']);
-        $input = array(
-            array("partID",$partID),
-            array("title",$data['title']),
-            array("shorthand",$data['shorthand']),
-            array("position",$data['position']),
-            array("type",$data['type']),
-            array("data",$data['data'])
-        );
-        $this->writeInDB("slides",$input);
+        $this->writeInDB("slides",$data);
     }
 
     public function changePartPositionInEvent($eventID,$partID,$position){
