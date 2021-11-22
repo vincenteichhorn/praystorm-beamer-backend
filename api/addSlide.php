@@ -11,7 +11,7 @@ if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
         isset($_POST['partAuthor'])) {
         require 'db_handling/Database.php';
         $database = new Database();
-        $id = $database->getPartIDByTitleAndAutor($_POST['partTitle'],$_POST['partAuthor']);
+        $id = $database->getPartIDByTitleAndAuthor($_POST['partTitle'],$_POST['partAuthor']);
         $condition = array(
             array("id", $id),
         );

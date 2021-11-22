@@ -30,8 +30,7 @@ class Database{
     public function getParts(){
         require DB_CONFIG_FILE;
         $pdo = new PDO($dns,$user,$psw);
-        $sqlstatement = "SELECT parts.title, parts.type, parts.author, parts.album, parts.copyright, parts_to_event.position FROM parts_to_event 
-                            LEFT JOIN parts ON parts_to_event.partID = parts.id
+        $sqlstatement = "SELECT parts.title, parts.type, parts.author, parts.album, parts.copyright, parts_to_event.position FROM parts, parts_to_event
                             GROUP BY parts.title, parts.author
                             ORDER BY parts.type, parts.title";
         $statement = $pdo->prepare($sqlstatement);
@@ -43,7 +42,7 @@ class Database{
         return $erg;
     }
 
-    public function getPartIDByTitleAndAutor($title,$author){
+    public function getPartIDByTitleAndAuthor($title,$author){
         $erg = $this->selectFromDB("parts","id",array(array("title",$title),array("author",$author)));
         if(sizeof($erg)!=0) {
             return $erg[0]['id'];
@@ -51,7 +50,7 @@ class Database{
         return false;
     }
 
-    protected function getEventIDByNameAndDate($name,$date){
+    public function getEventIDByNameAndDate($name,$date){
         $erg = $this->selectFromDB("events","id",array(array("name",$name),array("date",$date)));
         return $erg[0]['id'];
     }
@@ -121,7 +120,7 @@ class Database{
     }
 
     public function addPartToEvent($partTitle, $partAuthor, $partPosition, $eventName, $eventDate){
-        $partID = $this->getPartIDByTitleAndAutor($partTitle,$partAuthor);
+        $partID = $this->getPartIDByTitleAndAuthor($partTitle,$partAuthor);
         $eventID = $this->getEventIDByNameAndDate($eventName,$eventDate);
         $input = array(
             array("eventID",$eventID),

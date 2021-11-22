@@ -5,7 +5,7 @@ if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
     if(isset($_POST['oldPartTitle']) AND (isset($_POST['partTitle']) AND isset($_POST['oldPartAuthor']) AND isset($_POST['partAuthor']))) {
         require 'db_handling/Database.php';
         $database = new Database();
-        $partID = $database->getPartIDByTitleAndAutor($_POST['oldPartTitle'],$_POST['oldPartAuthor']);
+        $partID = $database->getPartIDByTitleAndAuthor($_POST['oldPartTitle'],$_POST['oldPartAuthor']);
         if(!$partID) {
             header(RequestStatus::badRequest);
         } else {

@@ -11,7 +11,7 @@ if($_SERVER["REQUEST_METHOD"] == RequestMethods::POST) {
         $type = $_POST['slideType'];
         $data = $_POST['data'];
         $database = new Database();
-        $partID = $database->getPartIDByTitleAndAutor($partTitle, $partAuthor);
+        $partID = $database->getPartIDByTitleAndAuthor($partTitle, $partAuthor);
         $condition = array(
             array("id",$partID),
         );
