@@ -74,10 +74,21 @@ class Database{
         return $erg;
     }
 
-    protected function getSlideStyle(int $id = 0){
+    public function getSlide($title) {
+        $data = $this->selectFromDB("slides", "*", array(array('title', $title)));
+        return $data[0];
+    }
+
+    public function getStyle($name) {
+        $data = $this->selectFromDB("slidestyle", "*", array(array('name', $name)));
+        return $data[0];
+    }
+
+    protected function getSlideStyle(int $id = 1){
         $data = $this->selectFromDB("slideStyle","*",array(array("id",$id)));
         if(count($data)==0)$data = $this->selectFromDB("slideStyle","*",array(array("id",1)));
         $erg = array(
+            "name" => $data[0]['name'],
             "backgroundImage" => $data[0]['backgroundImage'],
             "backgroundColor" => $data[0]['backgroundColor'],
             "verseFontSize" => (int) $data[0]['verseFontSize'],
@@ -85,8 +96,25 @@ class Database{
             "copyrightFontSize" => (int) $data[0]['copyrightFontSize'],
             "copyrightColor" => $data[0]['copyrightColor'],
             "verseColor" => $data[0]['verseColor'],
-            //"additive" => $data[0]['additive']
         );
+        return $erg;
+    }
+
+    public function getSlideStyles() {
+        $data = $this->selectFromDB("slideStyle", "*");
+        $erg = array();
+        foreach($data as $row) {
+            array_push($erg, array(
+                "name" => $row['name'],
+                "backgroundImage" => $row['backgroundImage'],
+                "backgroundColor" => $row['backgroundColor'],
+                "verseFontSize" => (int) $row['verseFontSize'],
+                "verseSpacing" => (int) $row['verseSpacing'],
+                "copyrightFontSize" => (int) $row['copyrightFontSize'],
+                "copyrightColor" => $row['copyrightColor'],
+                "verseColor" => $row['verseColor'],
+            ));
+        }
         return $erg;
     }
 
@@ -160,7 +188,7 @@ class Database{
         $this->updateDB("parts", $data, $condition);
     }
 
-    public function updateSlide($partID, $oldTitle, $newTitle, $type, $data){
+    public function updateSlide($partID, $oldTitle, $newTitle, $type, $data, $styleID){
         $condition = array(
             array("partID",$partID),
             array("title",$oldTitle)
@@ -168,9 +196,17 @@ class Database{
         $data = array(
             array("title", $newTitle),
             array("type", $type),
-            array("data",$data)
+            array("data",$data),
+            array("styleID", $styleID)
         );
         $this->updateDB("slides",$data,$condition);
+    }
+
+    public function updateStyle($name, $style) {
+        $condition = array(
+            array("name",$name),
+        );
+        $this->updateDB("slidestyle",$style,$condition);
     }
 
     public function deleteEvent($name,$date){

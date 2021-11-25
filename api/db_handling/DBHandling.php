@@ -91,8 +91,6 @@ trait DBHandling {
             $sqlinput[]=$element[1];
         }
         $sql = substr($sql,0,-5);
-        echo $sql;
-        print_r($sqlinput);
         $statement = $pdo->prepare($sql);
         $statement->execute($sqlinput);
     }

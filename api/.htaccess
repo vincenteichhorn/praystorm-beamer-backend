@@ -5,3 +5,4 @@ RewriteRule ^(.*)$ $1.php [NC,L]
 Header set Access-Control-Allow-Origin "*"
 Header set Access-Control-Allow-Methods "GET, POST, PATCH, PUT, DELETE, OPTIONS"
 Header set Access-Control-Allow-Headers "*"
+Header set Content-Type: "application/json"
