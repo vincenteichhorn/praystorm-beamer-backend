@@ -84,36 +84,73 @@ class Database{
         return $data[0];
     }
 
+    public function deleteStyle($id) {
+        $condition = array(
+            array("id",$id),
+        );
+        $this->deleteFromDB("slidestyle",$condition); 
+    }
+
+    public function getSlideByStyle($id) {
+        require DB_CONFIG_FILE;
+        $pdo = new PDO($dns,$user,$psw);
+        $sqlstatement = "SELECT * FROM slides WHERE slides.styleID =".$id.";";
+        $statement = $pdo->prepare($sqlstatement);
+        $statement->execute();
+        $erg=array();
+        while($row = $statement->fetch()) {
+            $erg[]=$row;
+        }
+        return $erg;
+    }
+
     protected function getSlideStyle(int $id = 1){
         $data = $this->selectFromDB("slideStyle","*",array(array("id",$id)));
         if(count($data)==0)$data = $this->selectFromDB("slideStyle","*",array(array("id",1)));
         $erg = array(
             "name" => $data[0]['name'],
-            "backgroundImage" => $data[0]['backgroundImage'],
-            "backgroundColor" => $data[0]['backgroundColor'],
             "verseFontSize" => (int) $data[0]['verseFontSize'],
             "verseSpacing" => (int) $data[0]['verseSpacing'],
             "copyrightFontSize" => (int) $data[0]['copyrightFontSize'],
             "copyrightColor" => $data[0]['copyrightColor'],
             "verseColor" => $data[0]['verseColor'],
+            "backgroundColor" => $data[0]['backgroundColor'],
+            "backgroundImage" => $data[0]['backgroundImage'],
         );
         return $erg;
     }
 
-    public function getSlideStyles() {
+    public function getSlideStyles($withID = false) {
         $data = $this->selectFromDB("slideStyle", "*");
         $erg = array();
         foreach($data as $row) {
-            array_push($erg, array(
-                "name" => $row['name'],
-                "backgroundImage" => $row['backgroundImage'],
-                "backgroundColor" => $row['backgroundColor'],
-                "verseFontSize" => (int) $row['verseFontSize'],
-                "verseSpacing" => (int) $row['verseSpacing'],
-                "copyrightFontSize" => (int) $row['copyrightFontSize'],
-                "copyrightColor" => $row['copyrightColor'],
-                "verseColor" => $row['verseColor'],
-            ));
+            if($withID) {
+                array_push($erg, array(
+                    "id" => (int) $row['id'],
+                    "name" => $row['name'],
+                    "verseFontSize" => (int) $row['verseFontSize'],
+                    "verseSpacing" => (int) $row['verseSpacing'],
+                    "copyrightFontSize" => (int) $row['copyrightFontSize'],
+                    "copyrightColor" => $row['copyrightColor'],
+                    "verseColor" => $row['verseColor'],
+                    "backgroundColor" => $row['backgroundColor'],
+                    
+                    "backgroundImage" => $row['backgroundImage'],
+                ));
+            } else {
+                array_push($erg, array(
+                    "name" => $row['name'],
+                    "verseFontSize" => (int) $row['verseFontSize'],
+                    "verseSpacing" => (int) $row['verseSpacing'],
+                    "copyrightFontSize" => (int) $row['copyrightFontSize'],
+                    "copyrightColor" => $row['copyrightColor'],
+                    "verseColor" => $row['verseColor'],
+                    "backgroundColor" => $row['backgroundColor'],
+                    
+                    "backgroundImage" => $row['backgroundImage'],
+                ));
+            }
+
         }
         return $erg;
     }
@@ -160,6 +197,10 @@ class Database{
 
     public function addSlide($data){
         $this->writeInDB("slides",$data);
+    }
+
+    public function addStyle($data) {
+        $this->writeInDB('slidestyle', $data);
     }
 
     public function changePartPositionInEvent($eventID,$partID,$position){
